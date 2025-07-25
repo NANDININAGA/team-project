@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Engineering - Anantha Software</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    .font-raleway { font-family: 'Raleway', sans-serif; }
+    .hero-section { background: linear-gradient(to right, #fecaca, #ffffff); }
+    .hover-float:hover {
+      transform: translateY(-6px) scale(1.02);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 relative">
+
+  <!-- Navbar -->
+<header class="bg-white shadow-md fixed w-full z-20 top-0 left-0">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-2 text-xl tracking-wide font-bold text-black font-raleway shadow-sm hover:tracking-wider transition-all duration-300 hover-float">
+      <img src="https://th.bing.com/th/id/OIP.A76RwBAicX96S5yh4ogh9AAAAA?r=0&o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo" class="h-8 w-8 object-contain" />
+      ANANTHA SOFTWARE
+    </a>
+
+    <nav class="space-x-4 text-gray-700 font-medium text-sm">
+      <a href="index.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-home mr-1"></i>Home</a>
+      <a href="about.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-info-circle mr-1"></i>About</a>
+      <a href="services.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-cogs mr-1"></i>Services</a>
+      <a href="products.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-box-open mr-1"></i>Products</a>
+      <a href="careers.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-briefcase mr-1"></i>Careers</a>
+      <a href="contact.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-envelope mr-1"></i>Contact</a>
+      <a href="login.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm shadow-md transition hover-float">
+        <i class="fas fa-sign-in-alt mr-1"></i>Login
+      </a>
+    </nav>
+  </div>
+</header>
+  <!-- Page Content -->
+  <main class="pt-28 px-6 max-w-6xl mx-auto">
+    <section class="hero-section p-10 rounded-xl shadow-lg hover-float transition">
+      <h1 class="text-4xl font-bold text-red-600 mb-4">Product Engineering</h1>
+      <p class="text-lg text-gray-800 mb-6">
+        Accelerate product innovation with our complete lifecycle product engineering—from idea to launch and beyond.
+      </p>
+      <div class="mb-6">
+        <h2 class="text-2xl font-semibold mb-3 text-red-500">What We Offer:</h2>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700">
+          <li>Conceptualization and UX/UI Design</li>
+          <li>Prototyping and MVP Development</li>
+          <li>Full-Stack Engineering and Testing</li>
+          <li>CI/CD, DevOps, and Cloud Deployment</li>
+          <li>Post-launch Support

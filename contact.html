@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - Anantha Software</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+    *, *::before, *::after {
+      box-sizing: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-float:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+    .font-raleway {
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .liquid-glass-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.45;
+      mix-blend-mode: screen;
+      animation: wobble 20s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+
+    .blob.green { background: #6ee7b7; width: 450px; height: 450px; top: 15%; left: 10%; animation-delay: 0s; }
+    .blob.teal { background: #5eead4; width: 600px; height: 600px; top: 35%; left: 65%; animation-delay: 4s; }
+    .blob.yellow { background: #fde68a; width: 380px; height: 380px; top: 70%; left: 25%; animation-delay: 2s; }
+
+    @keyframes wobble {
+      0% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -20px) scale(1.05); }
+      50% { transform: translate(-20px, 30px) scale(0.95); }
+      75% { transform: translate(20px, -15px) scale(1.08); }
+      100% { transform: translate(-10px, 10px) scale(1); }
+    }
+  </style>
+
+  <!-- Firebase SDK Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDYgTyi5_S1ih_Z7Gm1LHjW8VLNsAJJ1c0",
+      authDomain: "ananthalogin-b49e8.firebaseapp.com",
+      projectId: "ananthalogin-b49e8",
+      storageBucket: "ananthalogin-b49e8.appspot.com",
+      messagingSenderId: "531650339913",
+      appId: "1:531650339913:web:782d4709f1b8ef4b318b98"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("contactForm");
+      const nameInput = document.getElementById("contactName");
+      const emailInput = document.getElementById("contactEmail");
+      const subjectInput = document.getElementById("contactSubject");
+      const messageInput = document.getElementById("contactMessage");
+      const status = document.getElementById("statusMessage");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+          await addDoc(collection(db, "contacts"), {
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
+            subject: subjectInput.value.trim(),
+            message: messageInput.value.trim(),
+            submittedAt: new Date()
+          });
+          form.reset();
+          status.classList.remove("hidden");
+        } catch (err) {
+          alert("❌ Error submitting message: " + err.message);
+        }
+      });
+    });
+  </script>
+</head>
+<body class="text-gray-900 font-sans relative">
+  <div class="liquid-glass-bg">
+    <div class="blob green"></div>
+    <div class="blob teal"></div>
+    <div class="blob yellow"></div>
+  </div>
+
+ <!-- Navbar -->
+<header class="bg-white shadow-md fixed w-full z-20 top-0 left-0">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-2 text-xl tracking-wide font-bold text-black font-raleway shadow-sm hover:tracking-wider transition-all duration-300 hover-float">
+      <img src="https://th.bing.com/th/id/OIP.A76RwBAicX96S5yh4ogh9AAAAA?r=0&o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo" class="h-8 w-8 object-contain" />
+      ANANTHA SOFTWARE
+    </a>
+
+    <nav class="space-x-4 text-gray-700 font-medium text-sm">
+      <a href="index.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-home mr-1"></i>Home</a>
+      <a href="about.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-info-circle mr-1"></i>About</a>
+      <a href="services.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-cogs mr-1"></i>Services</a>
+      <a href="products.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-box-open mr-1"></i>Products</a>
+      <a href="careers.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-briefcase mr-1"></i>Careers</a>
+      <a href="contact.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-envelope mr-1"></i>Contact</a>
+      <a href="login.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm shadow-md transition hover-float">
+        <i class="fas fa-sign-in-alt mr-1"></i>Login
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Page Wrapper -->
+<main class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  
+  <!-- Modal-Like Popup Box -->
+  <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full p-8 sm:p-10" data-aos="fade-up">
+    
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Apply for a Role</h1>
+      <p class="text-gray-600 text-sm sm:text-base">Fill out the form and we'll get back to you shortly.</p>
+    </div>
+
+    <!-- Form -->
+    <form id="careerForm" class="space-y-6" enctype="multipart/form-data">
+      
+      <!-- Personal Info -->
+      <div>
+        <h2 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Personal Details</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="firstName" class="block text-sm font-medium mb-1">First Name</label>
+            <input type="text" id="firstName" placeholder="e.g. John" required
+              class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label for="lastName" class="block text-sm font-medium mb-1">Last Name</label>
+            <input type="text" id="lastName" placeholder="e.g. Doe" required
+              class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h2 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Contact Information</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="email" class="block text-sm font-medium mb-1">Email</label>
+            <input type="email" id="email" placeholder="example@email.com" required
+              class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium mb-1">Phone</label>
+            <input type="tel" id="phone" placeholder="+91 12345 67890" required
+              class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Job Info -->
+      <div>
+        <h2 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Job Details</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="position" class="block text-sm font-medium mb-1">Position Applying For</label>
+            <input type="text" id="position" placeholder="e.g. UI/UX Designer" required
+              class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label for="startDate" class="block text-sm font-medium mb-1">Available Start Date</label>
+            <input type="date" id="startDate" required
+              class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Online Presence -->
+      <div>
+        <h2 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Online Presence</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="cvLink" class="block text-sm font-medium mb-1">CV / Portfolio Link</label>
+            <input type="url" id="cvLink" placeholder="https://yourcv.com"
+              class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label for="linkedin" class="block text-sm font-medium mb-1">LinkedIn Profile</label>
+            <input type="url" id="linkedin" placeholder="https://linkedin.com/in/yourname"
+              class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Upload Resume -->
+      <div>
+        <label for="resumeUpload" class="block text-sm font-medium mb-1">Upload Resume</label>
+        <input type="file" id="resumeUpload" accept=".pdf,.doc,.docx"
+          class="w-full border border-gray-300 rounded-md p-3 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      </div>
+
+      <!-- Apply Button -->
+      <div class="text-center">
+        <button type="submit"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white text-base px-6 py-3 rounded-lg w-full sm:w-1/2 transition duration-300 font-semibold">
+          Apply Now
+        </button>
+      </div>
+    </form>
+
+    <!-- Status Message -->
+    <div id="statusMessage" class="hidden mt-6 text-green-700 bg-green-100 p-4 rounded text-center font-medium">
+      ✅ Application Submitted Successfully!
+    </div>
+  </div>
+</main>
+
+
+
+
+
+
+    <!-- Contact Info -->
+    <section class="py-20 bg-gray-50 rounded-xl shadow-inner text-center relative z-10" data-aos="fade-up">
+      <h2 class="text-3xl font-bold mb-4">Head Office</h2>
+      <p class="text-lg text-gray-700 mb-2">ANANTHA SOFTWARE SOLUTIONS PVT LTD</p>
+      <p class="text-lg text-gray-700 mb-2">WeWork Rajapushpa Summit, Financial District, Hyderabad, Telangana 500032.</p>
+      <p class="text-lg text-gray-700">Phone: <class="text-indigo-600 hover:underline">+91 40-71553446</p>
+      <p class="text-lg text-gray-700">Email: <a href="mailto:info@ananthasoftware.in" class="text-indigo-600 hover:underline">contact@ananthasoftware.in</a></p>
+    </section>
+  </main>
+  <!-- Why Choose Us Section -->
+<section class="py-20 bg-white relative z-10">
+  <div class="text-center mb-12" data-aos="fade-up">
+    <h2 class="text-4xl font-bold inline-block relative">
+      Why Choose Us
+      <span class="absolute left-0 bottom-0 w-full h-1 bg-gradient-to-r from-indigo-400 to-indigo-700 animate-pulse"></span>
+    </h2>
+    <p class="text-gray-600 mt-4 text-lg">We stand out because we innovate, adapt, and deliver beyond expectations.</p>
+  </div>
+  <div class="grid md:grid-cols-3 gap-10" data-aos="zoom-in-up">
+    <div class="bg-gray-50 p-6 rounded-lg shadow-lg hover-float text-center">
+      <i class="fas fa-star text-yellow-500 text-4xl mb-4"></i>
+      <h3 class="text-xl font-bold mb-2">Proven Excellence</h3>
+      <p>Years of experience delivering quality technology services across multiple domains.</p>
+    </div>
+    <div class="bg-gray-50 p-6 rounded-lg shadow-lg hover-float text-center">
+      <i class="fas fa-brain text-indigo-500 text-4xl mb-4"></i>
+      <h3 class="text-xl font-bold mb-2">Innovative Thinking</h3>
+      <p>We implement forward-thinking solutions with a future-ready mindset.</p>
+    </div>
+    <div class="bg-gray-50 p-6 rounded-lg shadow-lg hover-float text-center">
+      <i class="fas fa-handshake text-green-500 text-4xl mb-4"></i>
+      <h3 class="text-xl font-bold mb-2">Reliable Partnership</h3>
+      <p>Building long-lasting relationships by exceeding client expectations consistently.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Join Us / CTA Section -->
+<section class="py-20 bg-gray-100 relative z-10">
+  <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
+    <i class="fas fa-users text-indigo-600 text-5xl mb-6"></i>
+    <h2 class="text-4xl font-bold mb-4">Join the Anantha Software Family</h2>
+    <p class="text-gray-700 text-lg mb-6">Be a part of our innovation-driven team and grow your career with future-shaping technologies and meaningful work.</p>
+    <a href="careers.html" class="bg-indigo-600 text-white px-8 py-4 rounded-full text-lg shadow-lg hover:bg-indigo-700 hover-float transition">
+      <i class="fas fa-arrow-right mr-2"></i>Explore Careers
+    </a>
+  </div>
+</section>
+
+
+
+  <!-- Footer -->
+<footer class="bg-gray-900 text-white py-10 text-center relative z-10" data-aos="fade-in">
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold mb-4">Connect with Us:</h3>
+    <div class="flex justify-center space-x-6 text-xl">
+      <a href="https://www.linkedin.com/company/anantha-software/" target="_blank" aria-label="LinkedIn" class="hover:text-indigo-400 transition">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://www.facebook.com/ananthasoftware" target="_blank" aria-label="Facebook" class="hover:text-indigo-400 transition">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://twitter.com/ananthasoft" target="_blank" aria-label="Twitter" class="hover:text-indigo-400 transition">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </div>
+  </div>
+  <p class="text-sm text-gray-400">&copy; 2022 Anantha Software Solutions. All rights reserved.</p>
+</footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 1200, once: true });</script>
+</body>
+</html>  

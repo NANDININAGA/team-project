@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anantha Software - Empowering Innovation</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-float:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .font-raleway {
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .liquid-glass-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.45;
+      mix-blend-mode: screen;
+      animation: wobble 20s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+
+    .blob.green {
+      background: #6ee7b7;
+      width: 450px;
+      height: 450px;
+      top: 15%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .blob.teal {
+      background: #5eead4;
+      width: 600px;
+      height: 600px;
+      top: 35%;
+      left: 65%;
+      animation-delay: 4s;
+    }
+
+    .blob.yellow {
+      background: #fde68a;
+      width: 380px;
+      height: 380px;
+      top: 70%;
+      left: 25%;
+      animation-delay: 2s;
+    }
+
+    @keyframes wobble {
+      0% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -20px) scale(1.05); }
+      50% { transform: translate(-20px, 30px) scale(0.95); }
+      75% { transform: translate(20px, -15px) scale(1.08); }
+      100% { transform: translate(-10px, 10px) scale(1); }
+    }
+  </style>
+</head>
+
+<body class="text-gray-900 font-sans relative">
+
+  <!-- Blobby Background -->
+  <div class="liquid-glass-bg">
+    <div class="blob green" data-speed="10"></div>
+    <div class="blob teal" data-speed="15"></div>
+    <div class="blob yellow" data-speed="8"></div>
+  </div>
+
+  <!-- Navbar -->
+<header class="bg-white shadow-md fixed w-full z-20 top-0 left-0">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-2 text-xl tracking-wide font-bold text-black font-raleway shadow-sm hover:tracking-wider transition-all duration-300 hover-float">
+      <img src="https://th.bing.com/th/id/OIP.A76RwBAicX96S5yh4ogh9AAAAA?r=0&o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo" class="h-8 w-8 object-contain" />
+      ANANTHA SOFTWARE
+    </a>
+
+    <nav class="space-x-4 text-gray-700 font-medium text-sm">
+      <a href="index.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-home mr-1"></i>Home</a>
+      <a href="about.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-info-circle mr-1"></i>About</a>
+      <a href="services.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-cogs mr-1"></i>Services</a>
+      <a href="products.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-box-open mr-1"></i>Products</a>
+      <a href="careers.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-briefcase mr-1"></i>Careers</a>
+      <a href="contact.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-envelope mr-1"></i>Contact</a>
+      <a href="login.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm shadow-md transition hover-float">
+        <i class="fas fa-sign-in-alt mr-1"></i>Login
+      </a>
+    </nav>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <main class="pt-24 max-w-7xl mx-auto px-4 relative z-10">
+
+    <!-- Hero Section -->
+    <section class="relative py-32 text-center overflow-hidden">
+      <div class="relative z-10" data-aos="fade-down">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6 font-raleway">Anantha Software Solutions</h1>
+        <p class="text-2xl text-gray-700 mb-10">Empowering Semiconductor and AI Innovation</p>
+        <a href="contact.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-full text-lg shadow-lg transition hover-float">
+          <i class="fas fa-paper-plane mr-2"></i>Contact Us
+        </a>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-24 bg-white relative z-10 hover-float">
+      <div class="text-center">
+        <h2 class="text-4xl font-bold mb-16" data-aos="fade-up">Our Services</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div class="bg-gradient-to-br from-indigo-100 to-white p-8 rounded-xl shadow-xl hover-float" data-aos="fade-right">
+            <h3 class="text-xl font-semibold mb-2"><i class="fas fa-microchip mr-2 text-indigo-500"></i>Silicon Engineering</h3>
+            <p>Custom chip design and embedded systems development for high-performance needs.</p>
+          </div>
+          <div class="bg-gradient-to-br from-indigo-100 to-white p-8 rounded-xl shadow-xl hover-float" data-aos="fade-up">
+            <h3 class="text-xl font-semibold mb-2"><i class="fas fa-brain mr-2 text-indigo-500"></i>AI/ML Solutions</h3>
+            <p>Advanced machine learning models and data solutions tailored for your business.</p>
+          </div>
+          <div class="bg-gradient-to-br from-indigo-100 to-white p-8 rounded-xl shadow-xl hover-float" data-aos="fade-up">
+            <h3 class="text-xl font-semibold mb-2"><i class="fas fa-code mr-2 text-indigo-500"></i>Software Development</h3>
+            <p>Robust and scalable web, mobile, and enterprise-grade software applications.</p>
+          </div>
+          <div class="bg-gradient-to-br from-indigo-100 to-white p-8 rounded-xl shadow-xl hover-float" data-aos="fade-left">
+            <h3 class="text-xl font-semibold mb-2"><i class="fas fa-cubes mr-2 text-indigo-500"></i>Product Engineering</h3>
+            <p>Full lifecycle product engineering from concept to deployment.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-24 bg-gray-50 relative z-10 hover-float">
+      <div class="max-w-4xl mx-auto text-center" data-aos="zoom-in">
+        <h2 class="text-4xl font-bold mb-6">About Us</h2>
+        <p class="text-lg leading-relaxed text-gray-700">
+          At Anantha Software, we believe in driving innovation through cutting-edge technologies in Silicon Engineering and AI. With a talented team and a passion for excellence, we build solutions that scale globally.
+        </p>
+      </div>
+    </section>
+
+  <!-- Footer -->
+<footer class="bg-gray-900 text-white py-10 text-center relative z-10" data-aos="fade-in">
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold mb-4">Connect with Us:</h3>
+    <div class="flex justify-center space-x-6 text-xl">
+      <a href="https://www.linkedin.com/company/anantha-software/" target="_blank" aria-label="LinkedIn" class="hover:text-indigo-400 transition">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://www.facebook.com/ananthasoftware" target="_blank" aria-label="Facebook" class="hover:text-indigo-400 transition">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://twitter.com/ananthasoft" target="_blank" aria-label="Twitter" class="hover:text-indigo-400 transition">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </div>
+  </div>
+  <p class="text-sm text-gray-400">&copy; 2022 Anantha Software Solutions. All rights reserved.</p>
+</footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 1200, once: true });</script>
+</body>
+</html>

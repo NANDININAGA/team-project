@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply - Anantha Software</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDYgTyi5_S1ih_Z7Gm1LHjW8VLNsAJJ1c0",
+      authDomain: "ananthalogin-b49e8.firebaseapp.com",
+      projectId: "ananthalogin-b49e8",
+      storageBucket: "ananthalogin-b49e8.appspot.com",
+      messagingSenderId: "531650339913",
+      appId: "1:531650339913:web:782d4709f1b8ef4b318b98"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById('jobForm');
+      const status = document.getElementById('statusMessage');
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const job = document.getElementById('job').value;
+
+        if (!name || !email || !phone || !job) {
+          alert("❌ Please fill out all fields.");
+          return;
+        }
+
+        try {
+          await addDoc(collection(db, "applications"), {
+            name,
+            email,
+            phone,
+            job,
+            submittedAt: new Date()
+          });
+
+          form.reset();
+          status.classList.remove('hidden');
+          setTimeout(() => status.classList.add('hidden'), 5000);
+        } catch (error) {
+          alert("❌ Error submitting application: " + error.message);
+        }
+      });
+    });
+  </script>
+
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+    *, *::before, *::after {
+      box-sizing: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-float:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+    .font-raleway {
+      font-family: 'Raleway', sans-serif;
+    }
+    .liquid-glass-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.45;
+      mix-blend-mode: screen;
+      animation: wobble 20s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+    .blob.green { background: #6ee7b7; width: 450px; height: 450px; top: 15%; left: 10%; animation-delay: 0s; }
+    .blob.teal { background: #5eead4; width: 600px; height: 600px; top: 35%; left: 65%; animation-delay: 4s; }
+    .blob.yellow { background: #fde68a; width: 380px; height: 380px; top: 70%; left: 25%; animation-delay: 2s; }
+    @keyframes wobble {
+      0% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -20px) scale(1.05); }
+      50% { transform: translate(-20px, 30px) scale(0.95); }
+      75% { transform: translate(20px, -15px) scale(1.08); }
+      100% { transform: translate(-10px, 10px) scale(1); }
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-900 relative">
+
+  <div class="liquid-glass-bg">
+    <div class="blob green"></div>
+    <div class="blob teal"></div>
+    <div class="blob yellow"></div>
+  </div>
+
+  <!-- Navbar -->
+<header class="bg-white shadow-md fixed w-full z-20 top-0 left-0">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-2 text-xl tracking-wide font-bold text-black font-raleway shadow-sm hover:tracking-wider transition-all duration-300 hover-float">
+      <img src="https://th.bing.com/th/id/OIP.A76RwBAicX96S5yh4ogh9AAAAA?r=0&o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo" class="h-8 w-8 object-contain" />
+      ANANTHA SOFTWARE
+    </a>
+
+    <nav class="space-x-4 text-gray-700 font-medium text-sm">
+      <a href="index.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-home mr-1"></i>Home</a>
+      <a href="about.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-info-circle mr-1"></i>About</a>
+      <a href="services.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-cogs mr-1"></i>Services</a>
+      <a href="products.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-box-open mr-1"></i>Products</a>
+      <a href="careers.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-briefcase mr-1"></i>Careers</a>
+      <a href="contact.html" class="hover:text-indigo-600 hover-float"><i class="fas fa-envelope mr-1"></i>Contact</a>
+      <a href="login.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm shadow-md transition hover-float">
+        <i class="fas fa-sign-in-alt mr-1"></i>Login
+      </a>
+    </nav>
+  </div>
+</header>
+
+  <main class="pt-28 pb-16 px-4 relative z-10 max-w-2xl mx-auto">
+    <h2 class="text-4xl font-bold text-center mb-8">Apply for a Job</h2>
+    <form id="jobForm" class="bg-gray-50 p-8 rounded-xl shadow-xl space-y-6">
+      <input type="text" id="name" placeholder="Your Name" class="w-full p-4 rounded border border-gray-300 hover-float" required>
+      <input type="email" id="email" placeholder="Your Email" class="w-full p-4 rounded border border-gray-300 hover-float" required>
+      <input type="tel" id="phone" placeholder="Your Phone Number" class="w-full p-4 rounded border border-gray-300 hover-float" required>
+      <select id="job" class="w-full p-4 rounded border border-gray-300" required>
+        <option value="">Select Job Title</option>
+        <option value="Frontend Developer">Frontend Developer</option>
+        <option value="Backend Developer">Backend Developer</option>
+        <option value="UI/UX Designer">UI/UX Designer</option>
+        <option value="Data Analyst">Data Analyst</option>
+        <option value="Cloud Engineer">Cloud Engineer</option>
+        <option value="QA Tester">QA Tester</option>
+      </select>
+      <input type="submit" value="Submit Application" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-lg font-semibold text-lg transition">
+    </form>
+    <div id="statusMessage" class="hidden text-green-700 bg-green-100 mt-4 p-4 rounded text-center">✅ Application Submitted!</div>
+  </main>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 1200, once: true });</script>
+</body>
+</html>

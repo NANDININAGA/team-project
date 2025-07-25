@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    button#logoutBtn {
+      background-color: #ff4d4d;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .container {
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .message {
+      background-color: #fff;
+      border-left: 5px solid #4CAF50;
+      padding: 15px 20px;
+      margin: 15px 0;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .message p {
+      margin: 5px 0;
+    }
+
+    .message.contact {
+      border-left-color: #2196F3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Admin Dashboard</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <div class="container">
+    <div class="section">
+      <h2>Job Applications</h2>
+      <div id="applicationsList">
+        <p>Loading applications...</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Contact Messages</h2>
+      <div id="contactsList">
+        <p>Loading contact messages...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDYgTyi5_S1ih_Z7Gm1LHjW8VLNsAJJ1c0",
+      authDomain: "ananthalogin-b49e8.firebaseapp.com",
+      projectId: "ananthalogin-b49e8",
+      storageBucket: "ananthalogin-b49e8.appspot.com",
+      messagingSenderId: "531650339913",
+      appId: "1:531650339913:web:782d4709f1b8ef4b318b98"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const applicationsList = document.getElementById("applicationsList");
+    const contactsList = document.getElementById("contactsList");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    function showError(section, message) {
+      section.innerHTML = `<p>${message}</p>`;
+    }
+
+    async function loadApplications() {
+      try {
+        const snapshot = await getDocs(collection(db, "applications"));
+        if (snapshot.empty) {
+          showError(applicationsList, "No job applications found.");
+          return;
+        }
+
+        applicationsList.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const div = document.createElement("div");
+          div.classList.add("message");
+          div.innerHTML = `
+            <p><strong>Name:</strong> ${data.name || ''}</p>
+            <p><strong>Email:</strong> ${data.email || ''}</p>
+            <p><strong>Phone:</strong> ${data.phone || ''}</p>
+            <p><strong>Job Title:</strong> ${data.job || ''}</p>
+          `;
+          applicationsList.appendChild(div);
+        });
+      } catch (error) {
+        console.error("Error loading applications:", error);
+        showError(applicationsList, "Error loading applications.");
+      }
+    }
+
+    async function loadContacts() {
+      try {
+        const snapshot = await getDocs(collection(db, "contacts"));
+        if (snapshot.empty) {
+          showError(contactsList, "No contact messages found.");
+          return;
+        }
+
+        contactsList.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const div = document.createElement("div");
+          div.classList.add("message", "contact");
+          div.innerHTML = `
+            <p><strong>Name:</strong> ${data.name || ''}</p>
+            <p><strong>Email:</strong> ${data.email || ''}</p>
+            <p><strong>Message:</strong> ${data.message || ''}</p>
+          `;
+          contactsList.appendChild(div);
+        });
+      } catch (error) {
+        console.error("Error loading contacts:", error);
+        showError(contactsList, "Error loading contact messages.");
+      }
+    }
+
+    // Logout handler
+    logoutBtn.addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "login.html";
+      }).catch((error) => {
+        alert("Error logging out.");
+        console.error("Logout error:", error);
+      });
+    });
+
+    // Wait for user login before loading data
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loadApplications();
+        loadContacts();
+      } else {
+        alert("You are not logged in. Redirecting to login...");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>

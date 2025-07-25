@@ -44,10 +44,6 @@
       margin-bottom: 10px;
     }
 
-    .section {
-      margin-bottom: 40px;
-    }
-
     .message {
       background-color: #fff;
       border-left: 5px solid #4CAF50;
@@ -58,10 +54,6 @@
 
     .message p {
       margin: 5px 0;
-    }
-
-    .message.contact {
-      border-left-color: #2196F3;
     }
   </style>
 </head>
@@ -74,12 +66,13 @@
 
   <div class="container">
     <div class="section">
-      <h2>Job Applications</h2>
+      <h2>Submitted Applications</h2>
       <div id="applicationsList">
         <p>Loading applications...</p>
       </div>
     </div>
 
+    <!-- NEW: Section to show contacts -->
     <div class="section">
       <h2>Contact Messages</h2>
       <div id="contactsList">
@@ -88,11 +81,10 @@
     </div>
   </div>
 
-  <!-- Firebase SDKs -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDYgTyi5_S1ih_Z7Gm1LHjW8VLNsAJJ1c0",
@@ -111,64 +103,74 @@
     const contactsList = document.getElementById("contactsList");
     const logoutBtn = document.getElementById("logoutBtn");
 
-    function showError(section, message) {
-      section.innerHTML = `<p>${message}</p>`;
+    function showError(container, message) {
+      container.innerHTML = `<p style="color:red">${message}</p>`;
     }
 
     async function loadApplications() {
       try {
         const snapshot = await getDocs(collection(db, "applications"));
+
         if (snapshot.empty) {
           showError(applicationsList, "No job applications found.");
           return;
         }
 
         applicationsList.innerHTML = "";
+
         snapshot.forEach((doc) => {
           const data = doc.data();
           const div = document.createElement("div");
           div.classList.add("message");
           div.innerHTML = `
-            <p><strong>Name:</strong> ${data.name || ''}</p>
+            <p><strong>Full Name:</strong> ${data.firstName || ''} ${data.lastName || ''}</p>
             <p><strong>Email:</strong> ${data.email || ''}</p>
             <p><strong>Phone:</strong> ${data.phone || ''}</p>
-            <p><strong>Job Title:</strong> ${data.job || ''}</p>
+            <p><strong>Position:</strong> ${data.position || ''}</p>
+            <p><strong>Start Date:</strong> ${data.startDate || ''}</p>
+            <p><strong>LinkedIn:</strong> ${data.linkedin || 'N/A'}</p>
+            <p><strong>CV:</strong> ${data.cvLink ? `<a href="${data.cvLink}" target="_blank">View</a>` : 'Not provided'}</p>
+            <p><strong>Submitted At:</strong> ${data.submittedAt || ''}</p>
           `;
           applicationsList.appendChild(div);
         });
+
       } catch (error) {
         console.error("Error loading applications:", error);
-        showError(applicationsList, "Error loading applications.");
+        showError(applicationsList, "Failed to load data.");
       }
     }
 
+    // NEW: Load contact messages
     async function loadContacts() {
       try {
         const snapshot = await getDocs(collection(db, "contacts"));
+
         if (snapshot.empty) {
           showError(contactsList, "No contact messages found.");
           return;
         }
 
         contactsList.innerHTML = "";
+
         snapshot.forEach((doc) => {
           const data = doc.data();
           const div = document.createElement("div");
-          div.classList.add("message", "contact");
+          div.classList.add("message");
           div.innerHTML = `
-            <p><strong>Name:</strong> ${data.name || ''}</p>
-            <p><strong>Email:</strong> ${data.email || ''}</p>
-            <p><strong>Message:</strong> ${data.message || ''}</p>
+            <p><strong>Name:</strong> ${data.name || 'N/A'}</p>
+            <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
+            <p><strong>Message:</strong> ${data.message || 'N/A'}</p>
+            <p><strong>Submitted At:</strong> ${data.timestamp || 'N/A'}</p>
           `;
           contactsList.appendChild(div);
         });
       } catch (error) {
         console.error("Error loading contacts:", error);
-        showError(contactsList, "Error loading contact messages.");
+        showError(contactsList, "Failed to load contact messages.");
       }
     }
 
-    // Logout handler
     logoutBtn.addEventListener("click", () => {
       signOut(auth).then(() => {
         window.location.href = "login.html";
@@ -178,13 +180,12 @@
       });
     });
 
-    // Wait for user login before loading data
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user && user.email === "admin@gmail.com") {
         loadApplications();
-        loadContacts();
+        loadContacts(); // NEW: load contacts
       } else {
-        alert("You are not logged in. Redirecting to login...");
+        alert("You are not authorized or not logged in. Redirecting...");
         window.location.href = "login.html";
       }
     });
